@@ -1,6 +1,6 @@
+import config from './config/config.js';
 import bodyParser from 'body-parser';
 import express from 'express';
-
 // setup controllers below
 import {
   getUserGamesCtrl,
