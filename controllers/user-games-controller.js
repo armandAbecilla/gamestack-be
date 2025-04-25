@@ -2,6 +2,7 @@ import {
   getUserGames,
   addUserGame,
   viewGameDetails,
+  updateGame,
 } from '../models/user-games-model.js';
 
 export const getUserGamesCtrl = async function (req, res, next) {
@@ -45,6 +46,22 @@ export const viewGameDetailCtrl = async function (req, res, next) {
     const resData = await viewGameDetails(id);
 
     res.status(201).json({ message: 'Success', data: resData });
+  } catch (e) {
+    return res.status(400).json({ message: e.message });
+  }
+};
+
+export const updateGameCtrl = async function (req, res, next) {
+  const id = req.params.id;
+  const gameData = req.body;
+
+  if (!id || !gameData) {
+    return res.status(400).json({ message: 'Missing data.' });
+  }
+
+  try {
+    await updateGame(id, gameData);
+    return res.status(200).json({ message: 'Game updated successfully.' });
   } catch (e) {
     return res.status(400).json({ message: e.message });
   }

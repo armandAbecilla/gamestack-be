@@ -27,7 +27,7 @@ export const getUserGames = async function () {
 
 export const addUserGame = async function (gameData) {
   const rawgDbRes = await fetch(
-    `https://api.rawg.io/api/games?key=${RAWG.apiKey}&page_size=1&search=${gameData.name}`,
+    `https://api.rawg.io/api/games?key=${RAWG.apiKey}&page_size=1&search=${gameData.name}`
   );
   const rawgDbResData = await rawgDbRes.json();
 
@@ -103,7 +103,7 @@ export const viewGameDetails = async function (id) {
 
   try {
     const response = await fetch(
-      `https://api.rawg.io/api/games/${data.details?.platform_id}?key=${RAWG.apiKey}`,
+      `https://api.rawg.io/api/games/${data.details?.platform_id}?key=${RAWG.apiKey}`
     );
     const resData = await response.json();
 
@@ -114,4 +114,25 @@ export const viewGameDetails = async function (id) {
   }
 
   return data;
+};
+
+export const updateGame = async function (id, gameData) {
+  const updatedStatus = gameData?.status;
+  const updatedNotes = gameData?.notes;
+
+  const updatedData = {
+    status: updatedStatus,
+    notes: updatedNotes,
+  };
+
+  const { error } = await supabase
+    .from('UserGames')
+    .update(updatedData)
+    .eq('id', id);
+
+  if (error) {
+    throw new Error(error);
+  }
+
+  return 'Updated successfully';
 };

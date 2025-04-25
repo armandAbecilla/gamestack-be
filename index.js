@@ -6,6 +6,7 @@ import {
   getUserGamesCtrl,
   addUserGameCtrl,
   viewGameDetailCtrl,
+  updateGameCtrl,
 } from './controllers/user-games-controller.js';
 
 const app = express();
@@ -15,7 +16,10 @@ app.use(express.static('public'));
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PATCH, PUT, DELETE, OPTIONS'
+  );
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
@@ -26,6 +30,11 @@ app.get('/games', async (req, res) => {
 
 app.get('/games/:id', async (req, res) => {
   await viewGameDetailCtrl(req, res);
+});
+
+app.patch('/games/:id', async (req, res) => {
+  console.log('PATCH');
+  await updateGameCtrl(req, res);
 });
 
 app.post('/games/add', async (req, res) => {
