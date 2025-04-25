@@ -1,0 +1,69 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# dotenv environment files
+.env
+.env.*.local
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Compiled or build output
+dist/
+build/
+coverage/
+public/
+tmp/
+temp/
+
+# Debug folders
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Optional npm cache
+.npm/
+
+# Docker
+docker-compose.override.yml
+
+# Optional lockfiles (if using only one lockfile type)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Misc
+*.tgz
+*.log
+*.bak
+*.swp
+*.orig
+
+# Images (optional, if dynamically generated)
+images/
+
+# TypeScript (if you ever add TS)
+*.tsbuildinfo
+
+# Ignore config overrides
+config/local.js

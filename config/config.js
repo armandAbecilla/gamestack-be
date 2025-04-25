@@ -1,3 +1,9 @@
+const config = {
+  EnvSettings: {
+    Port: 3000,
+  },
+};
+
 export const SUPA_BASE = {
   url: 'https://suziplcjgyycehixawbc.supabase.co',
   apiKey:
@@ -9,3 +15,5 @@ export const SUPA_BASE = {
 export const RAWG = {
   apiKey: 'bb7b58de08d140e99aaf8a1c930b3e98',
 };
+
+export default config;
