@@ -1,0 +1,262 @@
+[
+  {
+    "id": 1,
+    "details": {
+      "id": 3498,
+      "name": "Grand Theft Auto V",
+      "background_image": "https://media.rawg.io/media/games/20a/20aa03a10cda45239fe22d035c0ebe64.jpg"
+    },
+    "platform": "pc",
+    "status": "backlog"
+  },
+  {
+    "id": 2,
+    "details": {
+      "id": 3328,
+      "name": "The Witcher 3: Wild Hunt",
+      "background_image": "https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg"
+    },
+    "platform": "pc",
+    "status": "playing"
+  },
+  {
+    "id": 3,
+    "details": {
+      "id": 4200,
+      "name": "Portal 2",
+      "background_image": "https://media.rawg.io/media/games/2ba/2bac0e87cf45e5b508f227d281c9252a.jpg"
+    },
+    "platform": "pc",
+    "status": "wishlist"
+  },
+  {
+    "id": 4,
+    "details": {
+      "id": 4291,
+      "name": "Counter-Strike: Global Offensive",
+      "background_image": "https://media.rawg.io/media/games/736/73619bd336c894d6941d926bfd563946.jpg"
+    },
+    "platform": "pc",
+    "status": "completed"
+  },
+  {
+    "id": 5,
+    "details": {
+      "id": 5286,
+      "name": "Tomb Raider (2013)",
+      "background_image": "https://media.rawg.io/media/games/021/021c4e21a1824d2526f925eff6324653.jpg"
+    },
+    "platform": "pc",
+    "status": "completed"
+  },
+  {
+    "id": 6,
+    "details": {
+      "id": 13536,
+      "name": "Portal",
+      "background_image": "https://media.rawg.io/media/games/7fa/7fa0b586293c5861ee32490e953a4996.jpg"
+    },
+    "platform": "pc",
+    "status": "completed"
+  },
+  {
+    "id": 7,
+    "details": {
+      "id": 12020,
+      "name": "Left 4 Dead 2",
+      "background_image": "https://media.rawg.io/media/games/d58/d588947d4286e7b5e0e12e1bea7d9844.jpg"
+    },
+    "platform": "pc",
+    "status": "playing"
+  },
+  {
+    "id": 8,
+    "details": {
+      "id": 5679,
+      "name": "The Elder Scrolls V: Skyrim",
+      "background_image": "https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg"
+    },
+    "platform": "pc",
+    "status": "wishlist"
+  },
+  {
+    "id": 9,
+    "details": {
+      "id": 28,
+      "name": "Red Dead Redemption 2",
+      "background_image": "https://media.rawg.io/media/games/511/5118aff5091cb3efec399c808f8c598f.jpg"
+    },
+    "platform": "pc",
+    "status": "backlog"
+  },
+  {
+    "id": 10,
+    "details": {
+      "id": 4062,
+      "name": "BioShock Infinite",
+      "background_image": "https://media.rawg.io/media/games/fc1/fc1307a2774506b5bd65d7e8424664a7.jpg"
+    },
+    "platform": "pc",
+    "status": "backlog"
+  },
+  {
+    "id": "810.4214084348771",
+    "details": {
+      "id": 481913,
+      "name": "Black Myth: Wukong",
+      "background_image": "https://media.rawg.io/media/games/779/77988e89f7862afeede524420aa251b0.jpg"
+    },
+    "patform": "pc",
+    "status": "wishlist"
+  },
+  {
+    "id": "826.6340997021042",
+    "details": {
+      "id": 326243,
+      "name": "Elden Ring",
+      "background_image": "https://media.rawg.io/media/games/b29/b294fdd866dcdb643e7bab370a552855.jpg"
+    },
+    "patform": "xbox",
+    "status": "completed"
+  },
+  {
+    "id": "430.66086927933077",
+    "details": {
+      "id": 476122,
+      "name": "Stellar Blade",
+      "background_image": "https://media.rawg.io/media/games/fbd/fbdef5455da4c4033bed896e1540f6a1.jpg"
+    },
+    "patform": "playstation",
+    "status": "backlog"
+  },
+  {
+    "id": "805.4389222110455",
+    "details": {
+      "id": 494393,
+      "name": "Monster Hunter Rise",
+      "background_image": "https://media.rawg.io/media/games/dbb/dbba6100aae179b5f24052c9141d426d.jpg"
+    },
+    "patform": "pc",
+    "status": "wishlist"
+  },
+  {
+    "id": "363.9841066336329",
+    "details": {
+      "id": 973391,
+      "name": "Monster Hunter Wilds",
+      "background_image": "https://media.rawg.io/media/games/91b/91b4edd8fecf88b2b5ca0752321382ee.jpg"
+    },
+    "patform": "pc",
+    "status": "wishlist"
+  },
+  {
+    "id": "246.6239540364452",
+    "details": {
+      "id": 7689,
+      "name": "Rise of the Tomb Raider",
+      "background_image": "https://media.rawg.io/media/games/b45/b45575f34285f2c4479c9a5f719d972e.jpg"
+    },
+    "patform": "pc",
+    "status": "playing",
+    "notes": "Currently playing on my bazzite"
+  },
+  {
+    "id": "805.7397057035897",
+    "details": {
+      "id": 371831,
+      "name": "Xenoblade Chronicles: Definitive Edition",
+      "background_image": "https://media.rawg.io/media/games/773/7739920af75d01f6a3b7e76a21d1633a.jpg"
+    },
+    "patform": "nintendo switch",
+    "status": "wishlist",
+    "notes": "Will play this after matapos ung XC3"
+  },
+  {
+    "id": "803.7146612296957",
+    "details": {
+      "id": 23756,
+      "name": "Xenoblade Chronicles X",
+      "background_image": "https://media.rawg.io/media/screenshots/db8/db83a83c7fc09dca7d5357ed28d167dd.jpg"
+    },
+    "patform": "nintendo switch",
+    "status": "wishlist",
+    "notes": "testqwe"
+  },
+  {
+    "id": "458.6657502777534",
+    "details": {
+      "id": 3371,
+      "name": "Dark Souls II: Scholar of the First Sin",
+      "background_image": "https://media.rawg.io/media/games/8fc/8fc59e74133fd8a8a436b7e2d0fb36c2.jpg"
+    },
+    "patform": "pc",
+    "status": "playing",
+    "notes": null
+  },
+  {
+    "id": "994.5225602153951",
+    "details": {
+      "id": 51329,
+      "name": "Shadow of the Tomb Raider",
+      "background_image": "https://media.rawg.io/media/games/7f6/7f6cd70ba2ad57053b4847c13569f2d8.jpg"
+    },
+    "patform": "pc",
+    "status": "backlog",
+    "notes": "asdasdsad"
+  },
+  {
+    "id": "484.75327628826915",
+    "details": {
+      "id": 977316,
+      "name": "Balatro",
+      "background_image": "https://media.rawg.io/media/games/821/821a40bd0cc0ac7dfb3fe97a7878dc1f.jpg"
+    },
+    "patform": "pc",
+    "status": "playing",
+    "notes": "asf"
+  },
+  {
+    "id": "92.70138489796031",
+    "details": {
+      "id": 868086,
+      "name": "Silent Hill 2",
+      "background_image": "https://media.rawg.io/media/games/09b/09b41c1a2c5761c5b1772a4ae238bb0e.jpg"
+    },
+    "patform": "pc",
+    "status": "playing",
+    "notes": "asfasf"
+  },
+  {
+    "id": "364.2549769072685",
+    "details": {
+      "id": 452649,
+      "name": "Resident Evil: Village",
+      "background_image": "https://media.rawg.io/media/games/6cc/6cc23249972a427f697a3d10eb57a820.jpg"
+    },
+    "patform": "xbox",
+    "status": "completed",
+    "notes": "Finished the game twice. Best RE action for me."
+  },
+  {
+    "id": "461.367013515402",
+    "details": {
+      "id": 52790,
+      "name": "Castlevania: Symphony of the Night",
+      "background_image": "https://media.rawg.io/media/games/45d/45da4dc311d84b79230317d7b24a3dec.jpg"
+    },
+    "patform": "xbox",
+    "status": "playing",
+    "notes": "not yet finished"
+  },
+  {
+    "id": "618.7748218654776",
+    "details": {
+      "id": 997548,
+      "name": "Elden Ring Nightreign",
+      "background_image": "https://media.rawg.io/media/games/a14/a143ef815d323a3000840fc774d834c7.jpg"
+    },
+    "patform": "pc",
+    "status": "wishlist",
+    "notes": "Planning to play this shit"
+  }
+]
