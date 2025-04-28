@@ -4,10 +4,11 @@ import { SUPA_BASE, RAWG } from '../config/config.js';
 // Create a single supabase client for interacting with your database
 const supabase = createClient(SUPA_BASE.url, SUPA_BASE.secretKey);
 
-export const getUserGames = async function () {
-  const { data, error } = await supabase
+export const getUserGames = async function (page = 1, limit = 25) {
+  const { data, count, error } = await supabase
     .from('UserGames')
-    .select(`*, details:UserGamesMapping(*)`)
+    .select(`*, details:UserGamesMapping(*)`, { count: 'exact' })
+    .range((page - 1) * limit, page * limit - 1)
     .order('id', { ascending: false });
 
   if (error) {
@@ -22,7 +23,12 @@ export const getUserGames = async function () {
     details: i.details[0],
   }));
 
-  return games;
+  const fetchedData = {
+    count: count,
+    data: games,
+  };
+
+  return fetchedData;
 };
 
 export const addUserGame = async function (gameData) {
