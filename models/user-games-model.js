@@ -4,14 +4,29 @@ import { SUPA_BASE, RAWG } from '../config/config.js';
 // Create a single supabase client for interacting with your database
 const supabase = createClient(SUPA_BASE.url, SUPA_BASE.secretKey);
 
-export const getUserGames = async function (page = 1, limit = 25) {
-  const { data, count, error } = await supabase
-    .from('UserGames')
-    .select(`*, details:UserGamesMapping(*)`, { count: 'exact' })
-    .range((page - 1) * limit, page * limit - 1)
+export const getUserGames = async function (
+  searchTerm = '',
+  page = 1,
+  limit = 25
+) {
+  console.log(searchTerm, page, limit);
+  // We are now accessing a View
+
+  let query = supabase
+    .from('UserGamesWithDetails')
+    .select('*', { count: 'exact' })
     .order('id', { ascending: false });
 
+  if (searchTerm !== '') {
+    query = query.ilike('details_name', `%${searchTerm}%`);
+  }
+
+  query = query.range((page - 1) * limit, page * limit - 1);
+
+  const { data, count, error } = await query;
+
   if (error) {
+    console.error('Supabase Error:', error); // Log it
     throw new Error(error.message);
   }
 
@@ -20,7 +35,10 @@ export const getUserGames = async function (page = 1, limit = 25) {
     platform: i.platform,
     status: i.status,
     notes: i.notes,
-    details: i.details[0],
+    details: {
+      name: i.details_name,
+      background_image: i.background_image,
+    },
   }));
 
   const fetchedData = {

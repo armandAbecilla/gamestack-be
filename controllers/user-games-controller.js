@@ -9,8 +9,9 @@ export const getUserGamesCtrl = async function (req, res, next) {
   try {
     const page = req.query.page;
     const limit = req.query.limit;
+    const searchTerm = req.query.search;
 
-    const games = await getUserGames(page, limit);
+    const games = await getUserGames(searchTerm, page, limit);
     res.status(201).json(games);
   } catch (e) {
     res.json({ message: e.message || 'Could not fetch user games.' });
