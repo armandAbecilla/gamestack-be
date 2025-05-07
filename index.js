@@ -1,14 +1,6 @@
-import config from './config/config.js';
-import bodyParser from 'body-parser';
-import express from 'express';
-// setup controllers below
-import {
-  getUserGamesCtrl,
-  addUserGameCtrl,
-  viewGameDetailCtrl,
-  updateGameCtrl,
-} from './controllers/user-games-controller.js';
-
+const config = require('./config/config.js');
+const bodyParser = require('body-parser');
+const express = require('express');
 const app = express();
 
 app.use(bodyParser.json());
@@ -24,21 +16,24 @@ app.use((req, res, next) => {
   next();
 });
 
+// controllers
+const userGamesCtrl = require('./controllers/user-games-controller.js');
+
 app.get('/games', async (req, res) => {
-  await getUserGamesCtrl(req, res);
+  await userGamesCtrl.getUserGamesCtrl(req, res);
 });
 
 app.get('/games/:id', async (req, res) => {
-  await viewGameDetailCtrl(req, res);
+  await userGamesCtrl.viewGameDetailCtrl(req, res);
 });
 
 app.patch('/games/:id', async (req, res) => {
   console.log('PATCH');
-  await updateGameCtrl(req, res);
+  await userGamesCtrl.updateGameCtrl(req, res);
 });
 
 app.post('/games/add', async (req, res) => {
-  await addUserGameCtrl(req, res);
+  await userGamesCtrl.addUserGameCtrl(req, res);
 });
 
 app.use((req, res) => {

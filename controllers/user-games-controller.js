@@ -1,24 +1,19 @@
-import {
-  getUserGames,
-  addUserGame,
-  viewGameDetails,
-  updateGame,
-} from '../models/user-games-model.js';
+const userGamesMdl = require('../models/user-games-model.js');
 
-export const getUserGamesCtrl = async function (req, res, next) {
+exports.getUserGamesCtrl = async (req, res, next) => {
   try {
     const page = req.query.page;
     const limit = req.query.limit;
     const searchTerm = req.query.search;
 
-    const games = await getUserGames(searchTerm, page, limit);
+    const games = await userGamesMdl.getUserGames(searchTerm, page, limit);
     res.status(201).json(games);
   } catch (e) {
     res.json({ message: e.message || 'Could not fetch user games.' });
   }
 };
 
-export const addUserGameCtrl = async function (req, res, next) {
+exports.addUserGameCtrl = async (req, res, next) => {
   const gameData = req.body.gameData;
 
   if (
@@ -31,14 +26,14 @@ export const addUserGameCtrl = async function (req, res, next) {
   }
 
   try {
-    const resData = await addUserGame(gameData);
+    const resData = await userGamesMdl.addUserGame(gameData);
     res.status(201).json({ message: 'Game has been added!', data: resData });
   } catch (e) {
     return res.status(400).json({ message: e.message });
   }
 };
 
-export const viewGameDetailCtrl = async function (req, res, next) {
+exports.viewGameDetailCtrl = async (req, res, next) => {
   const id = req.params.id;
 
   if (!id) {
@@ -47,7 +42,7 @@ export const viewGameDetailCtrl = async function (req, res, next) {
 
   try {
     // model here
-    const resData = await viewGameDetails(id);
+    const resData = await userGamesMdl.viewGameDetails(id);
 
     res.status(201).json({ message: 'Success', data: resData });
   } catch (e) {
@@ -55,7 +50,7 @@ export const viewGameDetailCtrl = async function (req, res, next) {
   }
 };
 
-export const updateGameCtrl = async function (req, res, next) {
+exports.updateGameCtrl = async (req, res, next) => {
   const id = req.params.id;
   const gameData = req.body;
 
@@ -64,7 +59,7 @@ export const updateGameCtrl = async function (req, res, next) {
   }
 
   try {
-    await updateGame(id, gameData);
+    await userGamesMdl.updateGame(id, gameData);
     return res.status(200).json({ message: 'Game updated successfully.' });
   } catch (e) {
     return res.status(400).json({ message: e.message });

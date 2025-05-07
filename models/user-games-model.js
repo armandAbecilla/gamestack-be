@@ -1,14 +1,13 @@
-import { createClient } from '@supabase/supabase-js';
-import { SUPA_BASE, RAWG } from '../config/config.js';
+const config = require('../config/config.js');
+const sb = require('@supabase/supabase-js');
 
 // Create a single supabase client for interacting with your database
-const supabase = createClient(SUPA_BASE.url, SUPA_BASE.secretKey);
+const supabase = sb.createClient(
+  config.SUPA_BASE.url,
+  config.SUPA_BASE.secretKey
+);
 
-export const getUserGames = async function (
-  searchTerm = '',
-  page = 1,
-  limit = 25
-) {
+exports.getUserGames = async (searchTerm = '', page = 1, limit = 25) => {
   console.log(searchTerm, page, limit);
   // We are now accessing a View
 
@@ -49,9 +48,9 @@ export const getUserGames = async function (
   return fetchedData;
 };
 
-export const addUserGame = async function (gameData) {
+exports.addUserGame = async (gameData) => {
   const rawgDbRes = await fetch(
-    `https://api.rawg.io/api/games?key=${RAWG.apiKey}&page_size=1&search=${gameData.name}`
+    `https://api.rawg.io/api/games?key=${config.RAWG.apiKey}&page_size=1&search=${gameData.name}`
   );
   const rawgDbResData = await rawgDbRes.json();
 
@@ -110,7 +109,7 @@ export const addUserGame = async function (gameData) {
   }
 };
 
-export const viewGameDetails = async function (id) {
+exports.viewGameDetails = async (id) => {
   const { data, error } = await supabase
     .from('UserGames')
     .select(`*, details:UserGamesMapping(*)`)
@@ -127,7 +126,7 @@ export const viewGameDetails = async function (id) {
 
   try {
     const response = await fetch(
-      `https://api.rawg.io/api/games/${data.details?.platform_id}?key=${RAWG.apiKey}`
+      `https://api.rawg.io/api/games/${data.details?.platform_id}?key=${config.RAWG.apiKey}`
     );
     const resData = await response.json();
 
@@ -140,7 +139,7 @@ export const viewGameDetails = async function (id) {
   return data;
 };
 
-export const updateGame = async function (id, gameData) {
+exports.updateGame = async (id, gameData) => {
   const updatedStatus = gameData?.status;
   const updatedNotes = gameData?.notes;
 
