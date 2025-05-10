@@ -14,7 +14,7 @@ exports.createUser = async (email, password, firstName, lastName) => {
   });
 
   if (error) {
-    throw new Error('User account already exist.');
+    throw new Error(error);
   }
 
   if (user) {
@@ -28,7 +28,7 @@ exports.createUser = async (email, password, firstName, lastName) => {
       .select();
 
     if (error) {
-      throw new Error('Could not create user profile');
+      throw new Error(error);
     }
 
     if (userProfile) {
@@ -44,7 +44,7 @@ exports.loginUser = async (email, password) => {
   });
 
   if (error) {
-    throw new Error(error);
+    throw new Error(JSON.stringify({ ...error }));
   }
 
   if (user) {
