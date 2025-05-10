@@ -16,25 +16,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// controllers
-const userGamesCtrl = require('./controllers/user-games-controller.js');
+// routes
+const authRoutes = require('./routes/auth_routes.js');
+const gamesRoutes = require('./routes/games_routes.js');
 
-app.get('/games', async (req, res) => {
-  await userGamesCtrl.getUserGamesCtrl(req, res);
-});
-
-app.get('/games/:id', async (req, res) => {
-  await userGamesCtrl.viewGameDetailCtrl(req, res);
-});
-
-app.patch('/games/:id', async (req, res) => {
-  console.log('PATCH');
-  await userGamesCtrl.updateGameCtrl(req, res);
-});
-
-app.post('/games/add', async (req, res) => {
-  await userGamesCtrl.addUserGameCtrl(req, res);
-});
+app.use('/auth', authRoutes);
+app.use('/games', gamesRoutes);
 
 app.use((req, res) => {
   if (req.method === 'OPTIONS') {
