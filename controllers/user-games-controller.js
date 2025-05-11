@@ -14,13 +14,16 @@ exports.getUserGamesCtrl = async (req, res, next) => {
 };
 
 exports.addUserGameCtrl = async (req, res, next) => {
-  const gameData = req.body.gameData;
+  const gameData = req.body;
+  const userId = gameData.userId;
+  const rawgGameId = gameData.rawgGameId;
+  const status = gameData.status;
 
   if (
     gameData === null ||
-    gameData.name === null ||
-    gameData.platform === null ||
-    gameData.status === null
+    userId === null ||
+    rawgGameId === null ||
+    status === null
   ) {
     return res.status(400).json({ message: 'Missing data.' });
   }
@@ -33,21 +36,37 @@ exports.addUserGameCtrl = async (req, res, next) => {
   }
 };
 
-exports.viewGameDetailCtrl = async (req, res, next) => {
+exports.removeFromUserGames = async (req, res) => {
   const id = req.params.id;
 
-  if (!id) {
+  if (id === null || id === undefined) {
     return res.status(400).json({ message: 'Missing data.' });
   }
 
   try {
-    // model here
-    const resData = await userGamesMdl.viewGameDetails(id);
-
-    res.status(201).json({ message: 'Success', data: resData });
+    await userGamesMdl.removeFromUserGames(id);
+    res.status(201).json({ message: 'Game removed from library!' });
   } catch (e) {
     return res.status(400).json({ message: e.message });
   }
+};
+
+exports.getUserGameDetails = async (req, res) => {
+  const gameId = req.params.id;
+  const userId = req.query.userId;
+
+  if (gameId === null || userId === null) {
+    return res.status(400).json({ message: 'Missing data.' });
+  }
+
+  try {
+    const resData = await userGamesMdl.getUserGameDetails(gameId, userId);
+    res.status(201).json(resData);
+  } catch (e) {
+    return res.status(400).json({ message: e.message });
+  }
+
+  console.log(gameId, userId);
 };
 
 exports.updateGameCtrl = async (req, res, next) => {

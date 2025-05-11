@@ -19,9 +19,11 @@ app.use((req, res, next) => {
 // routes
 const authRoutes = require('./routes/auth_routes.js');
 const gamesRoutes = require('./routes/games_routes.js');
+const rawgRoutes = require('./routes/rawg_routes.js');
 
 app.use('/auth', authRoutes);
 app.use('/games', gamesRoutes);
+app.use('/rawg', rawgRoutes);
 
 app.use((req, res) => {
   if (req.method === 'OPTIONS') {

@@ -11,6 +11,7 @@ exports.SUPA_BASE = {
 };
 
 exports.RAWG = {
+  apiUrl: process.env.RAWG_api_url,
   apiKey: process.env.RAWG_api_key,
 };
 

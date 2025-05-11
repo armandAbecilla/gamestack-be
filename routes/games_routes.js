@@ -7,8 +7,14 @@ router.get('/', async (req, res) => {
   await userGamesCtrl.getUserGamesCtrl(req, res);
 });
 
+// get the specific details such as notes and status for the selected game
 router.get('/:id', async (req, res) => {
-  await userGamesCtrl.viewGameDetailCtrl(req, res);
+  await userGamesCtrl.getUserGameDetails(req, res);
+});
+
+// remove specific game from Library
+router.delete('/:id', async (req, res) => {
+  await userGamesCtrl.removeFromUserGames(req, res);
 });
 
 router.patch('/:id', async (req, res) => {
