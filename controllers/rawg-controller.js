@@ -1,12 +1,19 @@
 const config = require('../config/config');
 
+const fetch = require('fetch-retry')(global.fetch);
+const retryOps = {
+  retries: 3,
+  retryDelay: 1000,
+};
+
 exports.search = async (req, res) => {
   const keyword = req.query.keyword;
   const pageSize = 5;
 
   try {
     const response = await fetch(
-      `${config.RAWG.apiUrl}?key=${config.RAWG.apiKey}&page_size=${pageSize}&search=${keyword}`
+      `${config.RAWG.apiUrl}?key=${config.RAWG.apiKey}&page_size=${pageSize}&search=${keyword}`,
+      retryOps
     );
     const games = await response.json();
     res.status(200).json({ games: games.results });
@@ -29,8 +36,11 @@ exports.getGameDetails = async (req, res) => {
 exports.fetchGameDetailsById = async (id) => {
   try {
     const response = await fetch(
-      `${config.RAWG.apiUrl}/${id}?key=${config.RAWG.apiKey}`
+      `${config.RAWG.apiUrl}/${id}?key=${config.RAWG.apiKey}`,
+      retryOps
     );
+
+    console.log(response);
 
     return await response.json();
   } catch (error) {
