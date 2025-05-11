@@ -1,20 +1,13 @@
 const config = require('./config/config.js');
 const bodyParser = require('body-parser');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, PATCH, PUT, DELETE, OPTIONS'
-  );
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
+app.use(cors(config.CorsOptions));
 
 // routes
 const authRoutes = require('./routes/auth_routes.js');
