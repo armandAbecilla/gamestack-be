@@ -7,14 +7,19 @@ const supabase = sb.createClient(
   config.SUPA_BASE.secretKey
 );
 
-exports.getUserGames = async (userId, page = 1, limit = 25) => {
+exports.getUserGames = async (userId, status = '', page = 1, limit = 25) => {
   // We are now accessing a View
 
   let query = supabase
     .from('UserGames')
     .select('*', { count: 'exact' })
-    .eq('user_id', userId)
-    .order('id', { ascending: false });
+    .eq('user_id', userId);
+
+  if (status !== '') {
+    query = query.eq('status', status);
+  }
+
+  query = query.order('id', { ascending: false });
 
   query = query.range((page - 1) * limit, page * limit - 1);
 
@@ -73,7 +78,7 @@ exports.removeFromUserGames = async (id) => {
   }
 };
 
-exports.updateGame = async (id, gameData) => {
+exports.updateUserGameDetails = async (id, gameData) => {
   const updatedStatus = gameData?.status;
   const updatedNotes = gameData?.notes;
 

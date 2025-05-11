@@ -4,6 +4,7 @@ const rawgCtrl = require('../controllers/rawg-controller.js');
 exports.getUserGamesCtrl = async (req, res, next) => {
   try {
     const userId = req.params.id;
+    const status = req.query.status;
     const page = req.query.page;
     const limit = req.query.limit;
 
@@ -13,6 +14,7 @@ exports.getUserGamesCtrl = async (req, res, next) => {
 
     const { data: games, count } = await userGamesMdl.getUserGames(
       userId,
+      status,
       page,
       limit
     );
@@ -96,11 +98,9 @@ exports.getUserGameDetails = async (req, res) => {
   } catch (e) {
     return res.status(400).json({ message: e.message });
   }
-
-  console.log(gameId, userId);
 };
 
-exports.updateGameCtrl = async (req, res, next) => {
+exports.updateUserGameCtrl = async (req, res, next) => {
   const id = req.params.id;
   const gameData = req.body;
 
@@ -109,7 +109,7 @@ exports.updateGameCtrl = async (req, res, next) => {
   }
 
   try {
-    await userGamesMdl.updateGame(id, gameData);
+    await userGamesMdl.updateUserGameDetails(id, gameData);
     return res.status(200).json({ message: 'Game updated successfully.' });
   } catch (e) {
     return res.status(400).json({ message: e.message });

@@ -40,11 +40,8 @@ exports.fetchGameDetailsById = async (id) => {
       retryOps
     );
 
-    console.log(response);
-
     return await response.json();
   } catch (error) {
-    console.log(error);
     throw new Error('unable to fetch');
   }
 };

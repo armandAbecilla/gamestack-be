@@ -14,7 +14,7 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.patch('/:id', async (req, res) => {
-  await userGamesCtrl.updateGameCtrl(req, res);
+  await userGamesCtrl.updateUserGameCtrl(req, res);
 });
 
 router.post('/add', async (req, res) => {
