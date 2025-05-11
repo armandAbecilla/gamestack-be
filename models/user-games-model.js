@@ -7,50 +7,28 @@ const supabase = sb.createClient(
   config.SUPA_BASE.secretKey
 );
 
-exports.getUserGames = async (searchTerm = '', page = 1, limit = 25) => {
-  // console.log(searchTerm, page, limit);
-  // // We are now accessing a View
+exports.getUserGames = async (userId, page = 1, limit = 25) => {
+  // We are now accessing a View
 
-  // let query = supabase
-  //   .from('UserGamesWithDetails')
-  //   .select('*', { count: 'exact' })
-  //   .order('id', { ascending: false });
+  let query = supabase
+    .from('UserGames')
+    .select('*', { count: 'exact' })
+    .eq('user_id', userId)
+    .order('id', { ascending: false });
 
-  // if (searchTerm !== '') {
-  //   query = query.ilike('details_name', `%${searchTerm}%`);
-  // }
+  query = query.range((page - 1) * limit, page * limit - 1);
 
-  // query = query.range((page - 1) * limit, page * limit - 1);
+  const { data, error, count } = await query;
 
-  // const { data, count, error } = await query;
+  if (error) {
+    console.error('Supabase Error:', error);
+    throw new Error(error.message);
+  }
 
-  // if (error) {
-  //   console.error('Supabase Error:', error); // Log it
-  //   throw new Error(error.message);
-  // }
-
-  // const games = data.map((i) => ({
-  //   id: i.id,
-  //   platform: i.platform,
-  //   status: i.status,
-  //   notes: i.notes,
-  //   details: {
-  //     name: i.details_name,
-  //     background_image: i.background_image,
-  //   },
-  // }));
-
-  // const fetchedData = {
-  //   count: count,
-  //   data: games,
-  // };
-
-  const fetchedData = {
-    count: 0,
-    data: [],
+  return {
+    data: data,
+    count: count,
   };
-
-  return fetchedData;
 };
 
 exports.getUserGameDetails = async (gameId, userId) => {

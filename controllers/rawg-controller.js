@@ -19,12 +19,21 @@ exports.getGameDetails = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const response = await fetch(
-      `${config.RAWG.apiUrl}/${id}?key=${config.RAWG.apiKey}`
-    );
-    const gameDetails = await response.json();
+    const gameDetails = await this.fetchGameDetailsById(id);
     res.status(200).json(gameDetails);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+exports.fetchGameDetailsById = async (id) => {
+  try {
+    const response = await fetch(
+      `${config.RAWG.apiUrl}/${id}?key=${config.RAWG.apiKey}`
+    );
+
+    return await response.json();
+  } catch (error) {
+    throw new Error('unable to fetch');
   }
 };

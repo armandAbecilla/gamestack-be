@@ -1,13 +1,44 @@
 const userGamesMdl = require('../models/user-games-model.js');
+const rawgCtrl = require('../controllers/rawg-controller.js');
 
 exports.getUserGamesCtrl = async (req, res, next) => {
   try {
+    const userId = req.params.id;
     const page = req.query.page;
     const limit = req.query.limit;
-    const searchTerm = req.query.search;
 
-    const games = await userGamesMdl.getUserGames(searchTerm, page, limit);
-    res.status(201).json(games);
+    if (!userId) {
+      return res.status(400).json({ message: 'Missing data.' });
+    }
+
+    const { data: games, count } = await userGamesMdl.getUserGames(
+      userId,
+      page,
+      limit
+    );
+    const rawgGameDataPromises = games.map(async (game) => {
+      const data = await rawgCtrl.fetchGameDetailsById(game.rawg_game_id);
+
+      return {
+        userGameData: game,
+        ...data,
+      };
+    });
+
+    const result = await Promise.all(rawgGameDataPromises);
+    const gamesRes = result.map((game) => ({
+      id: game.id,
+      name: game.name,
+      background_image: game.background_image,
+      userGameData: game.userGameData,
+    }));
+
+    const resData = {
+      count: count,
+      games: gamesRes,
+    };
+
+    res.status(201).json(resData);
   } catch (e) {
     res.json({ message: e.message || 'Could not fetch user games.' });
   }
