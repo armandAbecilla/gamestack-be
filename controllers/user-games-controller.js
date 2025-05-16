@@ -5,6 +5,7 @@ exports.getUserGamesCtrl = async (req, res, next) => {
   try {
     const userId = req.params.id;
     const status = req.query.status;
+    const title = req.query.title;
     const page = req.query.page;
     const limit = req.query.limit;
 
@@ -15,6 +16,7 @@ exports.getUserGamesCtrl = async (req, res, next) => {
     const { data: games, count } = await userGamesMdl.getUserGames(
       userId,
       status,
+      title,
       page,
       limit
     );
@@ -40,7 +42,7 @@ exports.getUserGamesCtrl = async (req, res, next) => {
       games: gamesRes,
     };
 
-    res.status(201).json(resData);
+    res.status(200).json(resData);
   } catch (e) {
     res.json({ message: e.message || 'Could not fetch user games.' });
   }
@@ -50,12 +52,14 @@ exports.addUserGameCtrl = async (req, res, next) => {
   const gameData = req.body;
   const userId = gameData.userId;
   const rawgGameId = gameData.rawgGameId;
+  const rawgGameTitle = gameData.rawgGameTitle;
   const status = gameData.status;
 
   if (
     gameData === null ||
     userId === null ||
     rawgGameId === null ||
+    rawgGameTitle === null ||
     status === null
   ) {
     return res.status(400).json({ message: 'Missing data.' });
@@ -78,7 +82,7 @@ exports.removeFromUserGames = async (req, res) => {
 
   try {
     await userGamesMdl.removeFromUserGames(id);
-    res.status(201).json({ message: 'Game removed from library!' });
+    res.status(204).json({ message: 'Game removed from library!' });
   } catch (e) {
     return res.status(400).json({ message: e.message });
   }
@@ -94,7 +98,7 @@ exports.getUserGameDetails = async (req, res) => {
 
   try {
     const resData = await userGamesMdl.getUserGameDetails(gameId, userId);
-    res.status(201).json(resData);
+    res.status(200).json(resData);
   } catch (e) {
     return res.status(400).json({ message: e.message });
   }
