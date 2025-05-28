@@ -119,3 +119,13 @@ exports.updateUserGameCtrl = async (req, res, next) => {
     return res.status(400).json({ message: e.message });
   }
 };
+
+// @TODO: Create entries in games table with the following conditions:
+// Create 3 functions that will:
+// 1 - Checks for a record in the `games` using the rawg_game_id (external id)
+// 2 - Create an entry in the `games` table
+// 3 - Helper function that will check if the `last_synced_at` value is less than 7 days (from date of access);
+
+// Implementation
+// 1 - If the user visit the game page, e.g http://localhost:3000/game/4544 - run api that will check if an entry exist in the user table
+// 2 - If there is no entry, create an entry
