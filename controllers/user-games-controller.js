@@ -1,5 +1,6 @@
 const userGamesMdl = require('../models/user-games-model.js');
 const gamesMdl = require('../models/games-model.js');
+const httpHelper = require('../services/http.js');
 
 exports.getUserGamesCtrl = async (req, res, next) => {
   try {
@@ -23,6 +24,13 @@ exports.getUserGamesCtrl = async (req, res, next) => {
 
     const rawgGameDataPromises = games.map(async (game) => {
       const data = await gamesMdl.getSBGameRecord(game.rawg_game_id);
+      // const data = await httpHelper.retryPromise(
+      //   () => gamesMdl.getSBGameRecord(game.rawg_game_id),
+      //   3,
+      //   500
+      // );
+
+      console.log(data);
 
       return {
         userGameData: game,
