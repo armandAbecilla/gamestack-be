@@ -1,5 +1,5 @@
 const userGamesMdl = require('../models/user-games-model.js');
-const rawgCtrl = require('../controllers/rawg-controller.js');
+const gamesMdl = require('../models/games-model.js');
 
 exports.getUserGamesCtrl = async (req, res, next) => {
   try {
@@ -20,29 +20,34 @@ exports.getUserGamesCtrl = async (req, res, next) => {
       page,
       limit
     );
+
     const rawgGameDataPromises = games.map(async (game) => {
-      const data = await rawgCtrl.fetchGameDetailsById(game.rawg_game_id);
+      const data = await gamesMdl.getSBGameRecord(game.rawg_game_id);
 
       return {
         userGameData: game,
-        ...data,
+        ...data[0].rawg_data,
       };
     });
 
-    const result = await Promise.all(rawgGameDataPromises);
-    const gamesRes = result.map((game) => ({
-      id: game.id,
-      name: game.name,
-      background_image: game.background_image,
-      userGameData: game.userGameData,
-    }));
+    try {
+      const result = await Promise.all(rawgGameDataPromises);
+      const gamesRes = result.map((game) => ({
+        id: game.id,
+        name: game.name,
+        background_image: game.background_image,
+        userGameData: game.userGameData,
+      }));
 
-    const resData = {
-      count: count,
-      games: gamesRes,
-    };
+      const resData = {
+        count: count,
+        games: gamesRes,
+      };
 
-    res.status(200).json(resData);
+      res.status(200).json(resData);
+    } catch (e) {
+      res.json({ message: e.message || 'Could not fetch user games.' });
+    }
   } catch (e) {
     res.json({ message: e.message || 'Could not fetch user games.' });
   }

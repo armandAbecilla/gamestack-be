@@ -36,7 +36,6 @@ exports.getUserGames = async (
   const { data, error, count } = await query;
 
   if (error) {
-    console.error('Supabase Error:', error);
     throw new Error(error.message);
   }
 
