@@ -25,6 +25,7 @@ exports.search = async (req, res) => {
 
 exports.getGameDetails = async (req, res) => {
   const id = req.params.id;
+  const readOnly = req.query.readOnly; // use this tag to prevent double insert when using twice, e.g generateMetaData + prefetch
 
   try {
     // check if there is game detail record in Games tbl from Supabase
@@ -47,7 +48,9 @@ exports.getGameDetails = async (req, res) => {
     } else {
       // if no record in the Database
       const gameDetails = await this.fetchGameDetailsById(id); // fetch data from RAWG
-      await gamesCtrl.addSBGame(id, gameDetails); // Save data to DB for re-use
+      if (!readOnly) {
+        await gamesCtrl.addSBGame(id, gameDetails); // Save data to DB for re-use
+      }
       res.status(200).json(gameDetails);
     }
   } catch (error) {
