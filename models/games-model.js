@@ -1,6 +1,5 @@
 const config = require('../config/config.js');
 const sb = require('@supabase/supabase-js');
-const rawgCtrl = require('../');
 
 // Create a single supabase client for interacting with your database
 const supabase = sb.createClient(

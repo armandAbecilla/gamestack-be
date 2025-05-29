@@ -1,5 +1,6 @@
 const config = require('../config/config.js');
 const sb = require('@supabase/supabase-js');
+const { startOfWeek, endOfWeek } = require('date-fns');
 
 // Create a single supabase client for interacting with your database
 const supabase = sb.createClient(
@@ -12,10 +13,9 @@ exports.getUserGames = async (
   status = '',
   title = '',
   page = 1,
-  limit = 25
+  limit = 25,
+  filterByTimeUnit = undefined
 ) => {
-  // We are now accessing a View
-
   let query = supabase
     .from('UserGames')
     .select('*', { count: 'exact' })
@@ -29,7 +29,39 @@ exports.getUserGames = async (
     query = query.ilike('rawg_game_title', `%${title}%`);
   }
 
-  query = query.order('id', { ascending: false });
+  if (filterByTimeUnit) {
+    const now = new Date();
+
+    if (filterByTimeUnit === 'this_week') {
+      const start = startOfWeek(now, { weekStartsOn: 1 }); // Monday
+      const end = endOfWeek(now, { weekStartsOn: 1 }); // Sunday
+
+      query.gte('updated_at', start.toISOString()); // >= date
+      query.lte('updated_at', end.toDateString()); // <= date
+    } else if (filterByTimeUnit === 'last_30_days') {
+      const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); // 30 days in ms
+
+      query.gte('updated_at', thirtyDaysAgo.toISOString());
+    } else if (filterByTimeUnit === 'this_month') {
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1); // Get start of this month
+      const startOfNextMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() + 1,
+        1
+      ); // Get start of next month
+
+      query.gte('updated_at', startOfMonth.toISOString());
+      query.lte('updated_at', startOfNextMonth.toDateString());
+    } else if (filterByTimeUnit === 'this_year') {
+      const startOfYear = new Date(now.getFullYear(), 0, 1); // January 1 of this year
+      const startOfNextYear = new Date(now.getFullYear() + 1, 0, 1); // January 1 of next year
+
+      query.gte('updated_at', startOfYear.toISOString());
+      query.lte('updated_at', startOfNextYear.toDateString());
+    }
+  }
+  // default
+  query = query.order('updated_at', { ascending: false });
 
   query = query.range((page - 1) * limit, page * limit - 1);
 
@@ -95,6 +127,7 @@ exports.updateUserGameDetails = async (id, gameData) => {
   const updatedData = {
     status: updatedStatus,
     notes: updatedNotes,
+    updated_at: new Date().toISOString(),
   };
 
   const { error } = await supabase

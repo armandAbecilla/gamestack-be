@@ -9,6 +9,7 @@ exports.getUserGamesCtrl = async (req, res, next) => {
     const title = req.query.title;
     const page = req.query.page;
     const limit = req.query.limit;
+    const filterByTimeUnit = req.query.filterByTimeUnit;
 
     if (!userId) {
       return res.status(400).json({ message: 'Missing data.' });
@@ -19,7 +20,8 @@ exports.getUserGamesCtrl = async (req, res, next) => {
       status,
       title,
       page,
-      limit
+      limit,
+      filterByTimeUnit
     );
 
     const rawgGameDataPromises = games.map(async (game) => {
@@ -30,7 +32,7 @@ exports.getUserGamesCtrl = async (req, res, next) => {
       //   500
       // );
 
-      console.log(data);
+      // console.log(data);
 
       return {
         userGameData: game,
