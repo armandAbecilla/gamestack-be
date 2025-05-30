@@ -137,8 +137,12 @@ exports.updateUserGameCtrl = async (req, res, next) => {
 
 exports.getUserStatsCtrl = async (req, res) => {
   const id = req.params.id; // user id
-  const timeUnit = req.query.timeUnit;
-  const resData = await userGamesMdl.getUserStats(id, timeUnit);
+
+  const resData = {
+    user: id,
+    all: await userGamesMdl.getUserStats(id),
+    last_30_days: await userGamesMdl.getUserStats(id, 'last_30_days'),
+  };
 
   res.status(200).json(resData);
   if (!id) {
