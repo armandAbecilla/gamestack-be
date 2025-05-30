@@ -24,3 +24,11 @@ exports.CorsOptions = {
 exports.JWT = {
   SecretKey: process.env.JWT_Secret,
 };
+
+exports.PG = {
+  host: process.env.Supabase_pg_host,
+  port: process.env.Supabase_pg_port,
+  database: process.env.Supabase_pg_database,
+  user: process.env.Supabase_pg_user,
+  password: process.env.Supabase_pg_password,
+};

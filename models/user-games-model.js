@@ -1,6 +1,9 @@
 const config = require('../config/config.js');
 const sb = require('@supabase/supabase-js');
 const { startOfWeek, endOfWeek } = require('date-fns');
+const query = require('../services/postgres_service.js');
+
+const ACCEPTED_TIME_UNITS = '';
 
 // Create a single supabase client for interacting with your database
 const supabase = sb.createClient(
@@ -140,4 +143,45 @@ exports.updateUserGameDetails = async (id, gameData) => {
   }
 
   return 'Updated successfully';
+};
+
+exports.getUserStats = async (userId, timeUnit = '') => {
+  const ACCEPTED_TIME_UNITS = ['last_30_days', 'this_month'];
+  let queryStr = `SELECT status, COUNT(*) AS count FROM "UserGames" WHERE user_id = $1 `;
+  const params = [userId]; // userId as initial params
+
+  if (timeUnit && ACCEPTED_TIME_UNITS.includes(timeUnit)) {
+    const now = new Date();
+    if (timeUnit === 'last_30_days') {
+      const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); // 30 days in ms
+      queryStr += `AND updated_at >= $2`;
+      params.push(thirtyDaysAgo);
+    } else if (timeUnit === 'this_month') {
+      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+      // Get start of next month
+      const startOfNextMonth = new Date(
+        now.getFullYear(),
+        now.getMonth() + 1,
+        1
+      );
+      queryStr += `AND updated_at >= $2 AND updated_at <= $3`;
+      params.push(startOfMonth, startOfNextMonth);
+    }
+  }
+
+  queryStr += ` GROUP BY status`;
+
+  const data = await query.executeQuery(queryStr, params);
+  const result = data.reduce((acc, res) => {
+    const key = res.status || 'uncategorized';
+    acc[key] = parseInt(res.count);
+    return acc;
+  }, {});
+
+  const total = data.reduce((total, res) => total + parseInt(res.count), 0);
+
+  return {
+    ...result,
+    total: total,
+  };
 };

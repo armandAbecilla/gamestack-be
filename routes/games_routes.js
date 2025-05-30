@@ -26,4 +26,8 @@ router.get('/user/:id', async (req, res) => {
   await userGamesCtrl.getUserGamesCtrl(req, res);
 });
 
+router.get('/user/:id/stats', async (req, res) => {
+  await userGamesCtrl.getUserStatsCtrl(req, res);
+});
+
 module.exports = router;
