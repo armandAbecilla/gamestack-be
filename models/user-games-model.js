@@ -126,10 +126,12 @@ exports.removeFromUserGames = async (id) => {
 exports.updateUserGameDetails = async (id, gameData) => {
   const updatedStatus = gameData?.status;
   const updatedNotes = gameData?.notes;
+  const updatedPlatform = gameData?.platform;
 
   const updatedData = {
     status: updatedStatus,
     notes: updatedNotes,
+    platform: updatedPlatform,
     updated_at: new Date().toISOString(),
   };
 

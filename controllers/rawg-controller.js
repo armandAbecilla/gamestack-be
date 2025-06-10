@@ -25,22 +25,21 @@ exports.search = async (req, res) => {
 
 exports.getGameDetails = async (req, res) => {
   const id = req.params.id;
-  const readOnly = req.query.readOnly; // use this tag to prevent double insert when using twice, e.g generateMetaData + prefetch
+  const readOnly = req.query.readOnly || false; // use this tag to prevent double insert when using twice, e.g generateMetaData + prefetch
 
   try {
     // check if there is game detail record in Games tbl from Supabase
     const record = await gamesCtrl.getSBGameRecord(id);
 
     if (record.length > 0) {
-      const lastSyncAt = new Date(record.last_sync_at);
+      const lastSyncAt = new Date(record[0].last_synced_at);
       const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-      // check if last_sync_at is > 7 days
+      // check if last_sync_at is < 7 days
       const isOutdated = true;
-      // lastSyncAt > sevenDaysAgo
-      if (lastSyncAt > sevenDaysAgo) {
+      if (lastSyncAt < sevenDaysAgo && !readOnly) {
         const updatedDetails = await this.fetchGameDetailsById(id); // fetch updated data from RAWG
         await gamesCtrl.updateSBGame(id, updatedDetails);
-        res.status(200).json(gameDetails); // return after updating
+        res.status(200).json(updatedDetails); // return after updating
       } else {
         // return current record
         res.status(200).json(record[0].rawg_data); // return the data from DB
