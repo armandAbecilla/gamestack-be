@@ -13,10 +13,12 @@ app.use(cors(config.CorsOptions));
 const authRoutes = require('./routes/auth_routes.js');
 const gamesRoutes = require('./routes/games_routes.js');
 const rawgRoutes = require('./routes/rawg_routes.js');
+const gameSessionRoutes = require('./routes/game_session_routes.js');
 
 app.use('/auth', authRoutes);
 app.use('/games', gamesRoutes);
 app.use('/rawg', rawgRoutes);
+app.use('/game-session', gameSessionRoutes);
 
 app.use((req, res) => {
   if (req.method === 'OPTIONS') {
