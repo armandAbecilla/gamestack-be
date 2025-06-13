@@ -11,8 +11,8 @@ exports.addSession = async (gameSessionData) => {
   const newSession = {
     user_id: gameSessionData.userId,
     game_id: gameSessionData.gameId,
-    session_date: gameSessionData.date,
-    duration_minutes: gameSessionData.duration,
+    session_date: gameSessionData.sessionDate,
+    duration_minutes: gameSessionData.durationInMinutes,
     notes: gameSessionData.notes,
   };
 
@@ -27,8 +27,8 @@ exports.addSession = async (gameSessionData) => {
 
 exports.updateSession = async (id, gameSessionData) => {
   const updateSession = {
-    session_date: gameSessionData.date,
-    duration_minutes: gameSessionData.duration,
+    session_date: gameSessionData.sessionDate,
+    duration_minutes: gameSessionData.durationInMinutes,
     notes: gameSessionData.notes,
   };
 
@@ -56,5 +56,14 @@ exports.getGameSession = async (gameId, userId) => {
     throw new Error(error.message);
   }
 
-  return data;
+  const result = data.map((session) => ({
+    id: session.id,
+    userId: session.user_id,
+    gameId: session.game_id,
+    sessionDate: session.session_date,
+    durationInMinutes: session.duration_minutes,
+    notes: session.notes,
+  }));
+
+  return result;
 };

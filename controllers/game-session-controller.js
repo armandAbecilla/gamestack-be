@@ -19,7 +19,7 @@ exports.updateSession = async (req, res) => {
   const updatedSessionData = req.body;
   const gamesSessionId = req.params.id;
 
-  if (!updatedSessionData || gamesSessionId) {
+  if (!updatedSessionData || !gamesSessionId) {
     return res.status(400).json({ message: "Missing data." });
   }
 
