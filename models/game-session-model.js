@@ -30,6 +30,7 @@ exports.updateSession = async (id, gameSessionData) => {
     session_date: gameSessionData.sessionDate,
     duration_minutes: gameSessionData.durationInMinutes,
     notes: gameSessionData.notes,
+    updated_at: new Date().toISOString(),
   };
 
   const { error } = await supabase
@@ -50,7 +51,8 @@ exports.getGameSession = async (gameId, userId) => {
     .select("*")
     .eq("user_id", userId)
     .eq("game_id", gameId)
-    .order("session_date", { ascending: false });
+    .order("session_date", { ascending: false })
+    .order("updated_at", { ascending: false, nullsLast: true });
 
   if (error) {
     throw new Error(error.message);
@@ -66,4 +68,17 @@ exports.getGameSession = async (gameId, userId) => {
   }));
 
   return result;
+};
+
+exports.deleteGameSession = async (sessionId) => {
+  const { error } = await supabase
+    .from("game_sessions")
+    .delete()
+    .eq("id", sessionId);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return true;
 };

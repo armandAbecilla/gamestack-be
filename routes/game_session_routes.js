@@ -14,4 +14,8 @@ router.get("/:id", async (req, res) => {
   await gamesSessionCtrl.getGameSession(req, res);
 });
 
+router.delete("/:id", async (req, res) => {
+  await gamesSessionCtrl.deleteGameSession(req, res);
+});
+
 module.exports = router;

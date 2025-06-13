@@ -49,3 +49,18 @@ exports.getGameSession = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.deleteGameSession = async (req, res) => {
+  const sessionId = req.params.id;
+
+  if (!sessionId) {
+    return res.status(400).json({ message: "Missing" });
+  }
+
+  try {
+    await gamesSessionMdl.deleteGameSession(sessionId);
+    res.status(204).json({ message: "Session deleted!" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
