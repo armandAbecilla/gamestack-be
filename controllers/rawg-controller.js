@@ -1,7 +1,7 @@
-const config = require('../config/config');
-const gamesCtrl = require('./games-controller');
+const config = require("../config/config");
+const gamesCtrl = require("./games-controller");
 
-const fetch = require('fetch-retry')(global.fetch);
+const fetch = require("fetch-retry")(global.fetch);
 const retryOps = {
   retries: 3,
   retryDelay: 1000,
@@ -14,7 +14,7 @@ exports.search = async (req, res) => {
   try {
     const response = await fetch(
       `${config.RAWG.apiUrl}?key=${config.RAWG.apiKey}&page_size=${pageSize}&search=${keyword}`,
-      retryOps
+      retryOps,
     );
     const games = await response.json();
     res.status(200).json({ games: games.results });
@@ -61,12 +61,12 @@ exports.fetchGameDetailsById = async (id) => {
   try {
     const response = await fetch(
       `${config.RAWG.apiUrl}/${id}?key=${config.RAWG.apiKey}`,
-      retryOps
+      retryOps,
     );
 
     return await response.json();
   } catch (error) {
     console.log(error);
-    throw new Error('unable to fetch');
+    throw new Error("unable to fetch");
   }
 };
