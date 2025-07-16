@@ -71,3 +71,30 @@ exports.loginUser = async (email, password) => {
     }
   }
 };
+
+/**
+ * Get the user data from Profiles Table
+ * @param {string} userId - The userId from Supabase Auth.
+ */
+exports.getuserData = async (userId) => {
+  if (!userId) throw new Error('Please provide payload');
+
+  const { data: userData, error } = await supabase
+    .from('Profiles')
+    .select('*')
+    .eq('id', userId)
+    .single();
+
+  if (error) {
+    throw new Error(JSON.stringify(error));
+  }
+
+  if (userData) {
+    const result = {
+      firstName: userData.first_name,
+      lastName: userData.last_name,
+    };
+
+    return result;
+  }
+};

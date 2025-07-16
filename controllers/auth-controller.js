@@ -56,3 +56,28 @@ exports.login = async (req, res) => {
       .json({ message: 'Something went wrong, please try again later.' });
   }
 };
+
+exports.getUserData = async (req, res) => {
+  const userId = req.params.userId;
+
+  if (!userId || userId == '') {
+    return res.status(400).json({ message: 'Missing data' });
+  }
+
+  try {
+    const resData = await authMdl.getuserData(userId);
+    return res.status(200).json(resData);
+  } catch (e) {
+    const error = JSON.parse(e.message);
+
+    if (error.code == 'PGRST116') {
+      return res.status(400).json({
+        message: 'User not found.',
+      });
+    }
+
+    return res.status(400).json({
+      message: e.message || 'Something went wrong, please try again later.',
+    });
+  }
+};
